@@ -1,0 +1,44 @@
+[project]
+name = "morphon"
+version = "0.1.0"
+description = "Self-implemented seabed geomorphology classification (Dove/Nanson two-part MIM-GA scheme) for Bass Strait -- Part 1 Morphology and Part 2 Geomorphology."
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "bokeh>=3.9.2",
+    "datashader>=0.19.1",
+    "fastcore>=2.2.12",
+    "geopandas>=1.1.4",
+    "geoviews>=1.15.1",
+    "holoviews>=1.23.1",
+    "hvplot>=0.12.2",
+    "jupyter>=1.1.1",
+    "jupyter-bokeh>=4.1.0",
+    "matplotlib>=3.11.1",
+    "nbdev>=3.3.12",
+    "nbformat>=5.11.1",
+    "networkx>=3.6.1",
+    "numpy>=2.5.2",
+    "rasterio>=1.5.1",
+    "rioxarray>=0.23.0",
+    "scikit-image>=0.26.0",
+    "scipy>=1.18.0",
+    "shapely>=2.1.2",
+    "xarray>=2026.7.0",
+]
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["morphon_nbdev*"]
+
+[tool.nbdev]
+repo = "morphon"
+lib_path = "morphon_nbdev"
+doc_path = "docs"
+branch = "main"
+author = "anokye"
+author_email = "manokye56@gmail.com"
+description = "Self-implemented seabed geomorphology classification (Dove/Nanson two-part MIM-GA scheme)."

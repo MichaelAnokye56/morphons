@@ -1,0 +1,17 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# nbdev / Jupyter build artifacts
+_proc/
+.ipynb_checkpoints/
+
+# quarto doc site -- rebuilt by the deploy workflow (answerdotai/workflows/quarto-ghp3)
+docs/
