@@ -4,8 +4,20 @@ on:  [workflow_dispatch, pull_request, push]
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      # uv pip install (what this action uses under uv:true) doesn't read
+      # pyproject.toml's [tool.uv] build-constraint-dependencies -- that's only
+      # honoured by `uv sync`. This env var is the equivalent for uv pip install,
+      # and forces a modern `packaging` into cartopy's (a geoviews dependency)
+      # source build, which otherwise fails on Python 3.14 (no prebuilt wheel yet).
+      UV_BUILD_CONSTRAINT: build-constraints.txt
     steps:
       - uses: answerdotai/workflows/nbdev3-ci@master
         with:
           version: '3.14'
           uv: true
+          # not a PyTorch project -- this option's default (true) adds
+          # --extra-index-url https://download.pytorch.org/whl/cpu, which caps
+          # `packaging` at an old version there and, combined with several
+          # yanked setuptools-scm releases, makes cartopy's build unsatisfiable
+          torch_cpu: false

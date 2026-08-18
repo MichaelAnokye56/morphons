@@ -11,7 +11,14 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      # pip's equivalent of test.yaml's UV_BUILD_CONSTRAINT -- this action installs
+      # with plain pip, not uv, so the constraint has to be supplied this way instead.
+      PIP_CONSTRAINT: build-constraints.txt
     steps:
       - uses: answerdotai/workflows/quarto-ghp3@master
         with:
           version: '3.14'
+          # see test.yaml -- not a PyTorch project, and this option's default
+          # (true) is what breaks cartopy's build in the first place
+          torch_cpu: false
