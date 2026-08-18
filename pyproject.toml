@@ -29,6 +29,15 @@ dependencies = [
     "xarray>=2026.7.0",
 ]
 
+[tool.uv]
+# Forces a modern `packaging` into every build-isolation environment, including
+# cartopy's (a geoviews dependency) -- cartopy 0.25.0 has no prebuilt wheel yet for
+# the very-new Python 3.14, so it builds from source, and its own build
+# requirements resolve to a `packaging` too old to have `packaging.licenses`,
+# which setuptools>=77's license-expression validation needs. Without this, the
+# source build fails with `ImportError: Cannot import packaging.licenses`.
+build-constraint-dependencies = ["packaging>=24.2"]
+
 [build-system]
 requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"

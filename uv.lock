@@ -7,6 +7,9 @@ resolution-markers = [
     "sys_platform != 'emscripten' and sys_platform != 'win32'",
 ]
 
+[manifest]
+build-constraints = [{ name = "packaging", specifier = ">=24.2" }]
+
 [[package]]
 name = "affine"
 version = "3.0.0"
