@@ -11,13 +11,21 @@ jobs:
       # and forces a modern `packaging` into cartopy's (a geoviews dependency)
       # source build, which otherwise fails on Python 3.14 (no prebuilt wheel yet).
       UV_BUILD_CONSTRAINT: build-constraints.txt
+      # This action always adds --extra-index-url https://download.pytorch.org/whl/cpu
+      # regardless of the torch_cpu input below -- that index happens to carry an
+      # old `packaging` release, and uv's default "first index wins" safety
+      # behaviour locks onto it and refuses to consider PyPI's newer one, making
+      # cartopy's build dependencies unsatisfiable even with the constraint above.
+      # unsafe-best-match tells uv to consider all versions from all configured
+      # indexes instead -- safe here since both indexes (PyPI, PyTorch's) are
+      # trusted, uv's own error message suggested this exact fix.
+      UV_INDEX_STRATEGY: unsafe-best-match
     steps:
       - uses: answerdotai/workflows/nbdev3-ci@master
         with:
           version: '3.14'
           uv: true
-          # not a PyTorch project -- this option's default (true) adds
-          # --extra-index-url https://download.pytorch.org/whl/cpu, which caps
-          # `packaging` at an old version there and, combined with several
-          # yanked setuptools-scm releases, makes cartopy's build unsatisfiable
+          # kept false since this project has no PyTorch dependency, though note
+          # this alone does NOT remove the --extra-index-url above -- see
+          # UV_INDEX_STRATEGY, which is what actually fixes the real problem
           torch_cpu: false
